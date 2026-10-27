@@ -5,46 +5,393 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Walima Invitation – Hasan Ali</title>
 <meta name="description" content="Mr. & Mrs. Hafiz Zulfiqar Ali invite you to the Walima of their beloved son Hasan Ali — Friday, 04 December 2026, 2:00 PM, Al Madina Marquee.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
+:root{
+  --purple:#6b3fa0;
+  --purple-deep:#4a2678;
+  --lilac:#c4a3e0;
+  --lilac-soft:#e8d8f5;
+  --green:#1f3a2a;
+  --page:#f4ecf6;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%}
+html,body{min-height:100%;overflow-x:hidden}
 body{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  color:var(--green);
   background:
-    radial-gradient(ellipse 55% 40% at 8% 0%, rgba(196,163,224,.4), transparent 60%),
-    radial-gradient(ellipse 50% 45% at 100% 100%, rgba(180,140,210,.3), transparent 55%),
-    linear-gradient(180deg,#f7f1f8 0%, #f4ecf6 50%, #efe6f4 100%);
+    radial-gradient(ellipse 55% 40% at 8% 0%, rgba(196,163,224,.42), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 100% 100%, rgba(180,140,210,.32), transparent 55%),
+    linear-gradient(180deg,#f7f1f8 0%, var(--page) 50%, #efe6f4 100%);
   display:flex;
   justify-content:center;
   align-items:flex-start;
-  padding:max(12px, env(safe-area-inset-top)) 10px max(20px, env(safe-area-inset-bottom));
+  padding:max(12px, env(safe-area-inset-top)) 10px max(28px, env(safe-area-inset-bottom));
 }
-.invite{
-  width:100%;
-  max-width:480px;
-  line-height:0;
+
+/* ——— Preloader ——— */
+.preloader{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 35%, #5a3488 0%, #2d1848 55%, #1a0f2c 100%);
+  transition:opacity .9s cubic-bezier(.22,1,.36,1), visibility .9s;
+}
+.preloader.is-done{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.preloader-inner{
+  position:relative;
+  width:min(86vw, 320px);
+  text-align:center;
+  color:#f4eafc;
+}
+.bloom{
+  position:relative;
+  width:120px;
+  height:120px;
+  margin:0 auto 28px;
+}
+.bloom-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1.5px solid rgba(196,163,224,.35);
+  animation:ringPulse 2.4s ease-in-out infinite;
+}
+.bloom-ring:nth-child(2){inset:-14px;animation-delay:.35s;opacity:.55}
+.bloom-ring:nth-child(3){inset:-28px;animation-delay:.7s;opacity:.3}
+.seal{
+  position:absolute;
+  inset:18px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#8b5cc4,#5a3488 55%,#3d2260);
+  box-shadow:0 0 0 2px rgba(232,216,245,.4), 0 12px 36px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
+  display:grid;
+  place-items:center;
+  animation:sealFloat 2.8s ease-in-out infinite;
+}
+.seal span{
+  font-family:'Great Vibes',cursive;
+  font-size:42px;
+  line-height:1;
+  color:#f7eefc;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+.petal-spin{
+  position:absolute;
+  width:14px;height:20px;
+  border-radius:70% 30% 70% 30% / 60% 40% 60% 40%;
+  background:radial-gradient(circle at 30% 30%, #f0d8ff, #9b6fc6 70%);
+  top:50%;left:50%;
+  transform-origin:0 0;
+  opacity:.85;
+  animation:orbit 4.5s linear infinite;
+}
+.petal-spin:nth-child(4){animation-delay:0s;--r:58px}
+.petal-spin:nth-child(5){animation-delay:-1.1s;--r:62px;background:radial-gradient(circle at 30% 30%, #ffe0f0, #b06ab5)}
+.petal-spin:nth-child(6){animation-delay:-2.2s;--r:56px;background:radial-gradient(circle at 30% 30%, #e8d8f5, #7a4fb0)}
+.petal-spin:nth-child(7){animation-delay:-3.3s;--r:64px;background:radial-gradient(circle at 30% 30%, #f5e6ff, #a078c8)}
+
+.pre-bismillah{
+  font-family:'Amiri',serif;
+  font-size:clamp(20px, 5.5vw, 26px);
+  direction:rtl;
+  color:#e8d8f5;
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeUp .8s ease .25s forwards;
+  margin-bottom:14px;
+  text-shadow:0 0 20px rgba(196,163,224,.45);
+}
+.pre-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(36px, 10vw, 48px);
+  color:#fff;
+  opacity:0;
+  transform:translateY(12px);
+  animation:fadeUp .9s ease .55s forwards;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.pre-sub{
+  font-size:13px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--lilac);
+  opacity:0;
+  animation:fadeUp .8s ease .85s forwards;
+  margin-bottom:28px;
+}
+.progress{
+  width:160px;
+  height:2px;
+  margin:0 auto;
+  background:rgba(255,255,255,.12);
   border-radius:2px;
   overflow:hidden;
-  box-shadow:0 18px 48px rgba(70,40,90,.16), 0 2px 8px rgba(70,40,90,.06);
+  opacity:0;
+  animation:fadeUp .6s ease 1s forwards;
+}
+.progress > i{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, #c4a3e0, #fff, #c4a3e0);
+  background-size:200% 100%;
+  animation:shimmer 1.2s linear infinite;
+  border-radius:2px;
+  transition:width .25s ease;
+}
+.pre-hint{
+  margin-top:16px;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(232,216,245,.55);
+  opacity:0;
+  animation:fadeUp .6s ease 1.15s forwards;
+}
+
+@keyframes ringPulse{
+  0%,100%{transform:scale(1);opacity:.5}
+  50%{transform:scale(1.06);opacity:1}
+}
+@keyframes sealFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+@keyframes orbit{
+  from{transform:rotate(0deg) translateX(var(--r,58px)) rotate(0deg)}
+  to{transform:rotate(360deg) translateX(var(--r,58px)) rotate(-360deg)}
+}
+@keyframes fadeUp{
+  to{opacity:1;transform:none}
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+/* ——— Invitation ——— */
+.stage{
+  width:100%;
+  max-width:480px;
+  position:relative;
+  opacity:0;
+  transform:translateY(36px) scale(.94);
+  filter:blur(8px);
+  transition:none;
+}
+.stage.is-in{
+  animation:cardReveal 1.35s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes cardReveal{
+  0%{opacity:0;transform:translateY(36px) scale(.94);filter:blur(8px)}
+  55%{opacity:1;filter:blur(0)}
+  100%{opacity:1;transform:none;filter:blur(0)}
+}
+.invite{
+  position:relative;
+  line-height:0;
+  border-radius:3px;
+  overflow:hidden;
   background:#fff;
+  box-shadow:
+    0 22px 56px rgba(70,40,90,.18),
+    0 4px 14px rgba(70,40,90,.08);
+  transform-origin:center top;
+}
+.invite::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg, transparent 40%, rgba(255,255,255,.45) 50%, transparent 60%);
+  background-size:220% 100%;
+  animation:sheen 4.5s ease-in-out 1.4s infinite;
+  pointer-events:none;
+  mix-blend-mode:soft-light;
 }
 .invite img{
   width:100%;
   height:auto;
   display:block;
-  vertical-align:top;
+  opacity:0;
+  transform:scale(1.04);
+}
+.stage.is-in .invite img{
+  animation:imgSettle 1.5s cubic-bezier(.16,1,.3,1) .15s forwards;
+}
+@keyframes imgSettle{
+  to{opacity:1;transform:none}
+}
+@keyframes sheen{
+  0%,100%{background-position:160% 0;opacity:0}
+  15%{opacity:.7}
+  45%{background-position:-60% 0;opacity:0}
+  100%{opacity:0}
+}
+
+/* Floating petals after reveal */
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:50;
+  overflow:hidden;
+}
+.confetti span{
+  position:absolute;
+  top:-30px;
+  width:12px;height:16px;
+  border-radius:70% 30% 70% 30% / 60% 40% 60% 40%;
+  opacity:0;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  0%{transform:translate3d(0,0,0) rotate(0);opacity:0}
+  8%{opacity:.85}
+  90%{opacity:.55}
+  100%{transform:translate3d(var(--sx),110vh,0) rotate(var(--rot));opacity:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .bloom-ring,.seal,.petal-spin,.progress > i,.invite::after{animation:none !important}
+  .pre-bismillah,.pre-title,.pre-sub,.progress,.pre-hint{opacity:1;transform:none;animation:none}
+  .preloader{transition:opacity .3s}
+  .stage.is-in,.stage.is-in .invite img{animation:none;opacity:1;transform:none;filter:none}
+  .confetti{display:none}
 }
 </style>
 </head>
 <body>
-  <main class="invite">
-    <img
-      src="invitation.jpg"
-      alt="Walima invitation: Mr. &amp; Mrs. Hafiz Zulfiqar Ali request the pleasure of your company at the walima of their beloved son Hasan Ali. Date: Friday, 04 December 2026. Time: 2:00 PM. Venue: Al Madina Marquee. Your presence will make our celebration complete."
-      width="1080"
-      height="1528"
-      decoding="async"
-      fetchpriority="high"
-    >
-  </main>
+  <div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="Opening invitation">
+    <div class="preloader-inner">
+      <div class="bloom" aria-hidden="true">
+        <div class="bloom-ring"></div>
+        <div class="bloom-ring"></div>
+        <div class="bloom-ring"></div>
+        <span class="petal-spin"></span>
+        <span class="petal-spin"></span>
+        <span class="petal-spin"></span>
+        <span class="petal-spin"></span>
+        <div class="seal"><span>ح</span></div>
+      </div>
+      <p class="pre-bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+      <p class="pre-title">Hasan Ali</p>
+      <p class="pre-sub">Walima Invitation</p>
+      <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+      <p class="pre-hint" id="hint">Preparing your invite</p>
+    </div>
+  </div>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <div class="stage" id="stage">
+    <main class="invite">
+      <img
+        id="inviteImg"
+        src="invitation.jpg"
+        alt="Walima invitation: Mr. &amp; Mrs. Hafiz Zulfiqar Ali request the pleasure of your company at the walima of their beloved son Hasan Ali. Date: Friday, 04 December 2026. Time: 2:00 PM. Venue: Al Madina Marquee. Your presence will make our celebration complete."
+        width="1080"
+        height="1528"
+        decoding="async"
+        fetchpriority="high"
+      >
+    </main>
+  </div>
+
+<script>
+(function () {
+  var pre = document.getElementById('preloader');
+  var bar = document.getElementById('bar');
+  var hint = document.getElementById('hint');
+  var stage = document.getElementById('stage');
+  var img = document.getElementById('inviteImg');
+  var confetti = document.getElementById('confetti');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = 0;
+  var imgReady = false;
+  var minDone = false;
+
+  function setProgress(n) {
+    progress = Math.max(progress, Math.min(100, n));
+    bar.style.width = progress + '%';
+  }
+
+  function markImgReady() {
+    imgReady = true;
+    setProgress(92);
+    tryReveal();
+  }
+
+  if (img.complete && img.naturalWidth) markImgReady();
+  else {
+    img.addEventListener('load', markImgReady, { once: true });
+    img.addEventListener('error', markImgReady, { once: true });
+  }
+
+  var tick = setInterval(function () {
+    if (progress < 78) setProgress(progress + (2 + Math.random() * 4));
+    else if (imgReady && progress < 96) setProgress(progress + 3);
+  }, 120);
+
+  setTimeout(function () {
+    minDone = true;
+    setProgress(Math.max(progress, 70));
+    tryReveal();
+  }, reduce ? 400 : 2200);
+
+  function tryReveal() {
+    if (!imgReady || !minDone) return;
+    clearInterval(tick);
+    setProgress(100);
+    hint.textContent = 'Welcome';
+    setTimeout(openInvite, reduce ? 150 : 480);
+  }
+
+  function openInvite() {
+    pre.classList.add('is-done');
+    stage.classList.add('is-in');
+    if (!reduce) spawnPetals();
+    setTimeout(function () { pre.remove(); }, 1000);
+  }
+
+  function spawnPetals() {
+    var colors = [
+      'radial-gradient(circle at 30% 30%, #f0d8ff, #9b6fc6)',
+      'radial-gradient(circle at 30% 30%, #ffe0f0, #b06ab5)',
+      'radial-gradient(circle at 30% 30%, #e8d8f5, #7a4fb0)',
+      'radial-gradient(circle at 30% 30%, #f5e6ff, #c4a3e0)'
+    ];
+    for (var i = 0; i < 18; i++) {
+      (function (i) {
+        setTimeout(function () {
+          var p = document.createElement('span');
+          var s = 0.65 + Math.random() * 0.9;
+          var dur = 5.5 + Math.random() * 4.5;
+          p.style.left = (4 + Math.random() * 92) + '%';
+          p.style.width = (12 * s) + 'px';
+          p.style.height = (16 * s) + 'px';
+          p.style.background = colors[i % colors.length];
+          p.style.setProperty('--sx', ((Math.random() - 0.5) * 120) + 'px');
+          p.style.setProperty('--rot', (180 + Math.random() * 360) + 'deg');
+          p.style.animationDuration = dur + 's';
+          confetti.appendChild(p);
+          setTimeout(function () { p.remove(); }, dur * 1000 + 80);
+        }, i * 140);
+      })(i);
+    }
+  }
+})();
+</script>
 </body>
 </html>
